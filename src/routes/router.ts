@@ -8,6 +8,7 @@ import { recettesController } from '../controllers/RecettesController';
 import { usersController } from '../controllers/UsersController';
 import { coursesController } from '../controllers/CoursesController';
 import { seasonsController } from '../controllers/SeasonsController';
+import { imagesController } from '../controllers/ImagesController';
 
 
 //RECETTES
@@ -57,5 +58,14 @@ router.get('/seasons/get/:id', (request: Request, response: Response) => {
     seasonsController.read(request, response);
 })
 //FIN SAISONS
+
+//IMAGES
+router.get('/images', (request: Request, response: Response) => {
+    imagesController.all(request, response);
+});
+router.get('/images/get/:id', (request: Request, response: Response) => {
+    imagesController.read(request, response);
+})
+//FIN IMAGES
 
 export { router };

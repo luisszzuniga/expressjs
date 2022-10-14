@@ -9,6 +9,7 @@ const RecettesController_1 = require("../controllers/RecettesController");
 const UsersController_1 = require("../controllers/UsersController");
 const CoursesController_1 = require("../controllers/CoursesController");
 const SeasonsController_1 = require("../controllers/SeasonsController");
+const ImagesController_1 = require("../controllers/ImagesController");
 //RECETTES
 router.get("/recettes", (request, response) => {
     RecettesController_1.recettesController.all(request, response);
@@ -51,4 +52,12 @@ router.get('/seasons', (request, response) => {
 });
 router.get('/seasons/get/:id', (request, response) => {
     SeasonsController_1.seasonsController.read(request, response);
+});
+//FIN SAISONS
+//IMAGES
+router.get('/images', (request, response) => {
+    ImagesController_1.imagesController.all(request, response);
+});
+router.get('/images/get/:id', (request, response) => {
+    ImagesController_1.imagesController.read(request, response);
 });

@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.recettesController = void 0;
+const Image_1 = require("../models/Image");
 const Recipe_1 = require("../models/Recipe");
 const User_1 = require("../models/User");
 const CrudController_1 = require("./CrudController");
 class RecettesController extends CrudController_1.CrudController {
     async read(request, response) {
-        response.send(await Recipe_1.Recipe.findOne({ where: { id: request.params.id, deleted_at: null }, include: User_1.User }));
+        response.send(await Recipe_1.Recipe.findOne({ where: { id: request.params.id, deleted_at: null }, include: [User_1.User, Image_1.Image] }));
     }
     ;
     async all(request, response) {

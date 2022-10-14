@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { Image } from "../models/Image";
 import { Recipe } from "../models/Recipe";
 import { User } from "../models/User";
 import { CrudController } from "./CrudController";
@@ -7,7 +8,7 @@ class RecettesController extends CrudController
 {
     async read(request: Request, response: Response)
     {
-        response.send(await Recipe.findOne({where: {id: request.params.id, deleted_at: null}, include: User}));
+        response.send(await Recipe.findOne({where: {id: request.params.id, deleted_at: null}, include: [User, Image]}));
     };
 
     async all(request: Request, response: Response)

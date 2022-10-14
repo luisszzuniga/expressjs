@@ -36,5 +36,4 @@ Season.init({
 Season.hasMany(Recipe, {foreignKey: 'idCourse'});
 Recipe.belongsTo(Season, {foreignKey: 'idCourse'});
 
-
 export { Season };
