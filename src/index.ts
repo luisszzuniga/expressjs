@@ -1,22 +1,17 @@
+//Imports
 require('dotenv').config();
-
 import express from 'express';
-import { Singleton } from './config/singleton';
-import { PORT, DB_HOST, DB_USER, DB_PASSWORD, DB_NAME } from './config/constants';
+import { PORT } from './config/constants';
+import { router } from './routes/router';
 
-//Routing imports
-import { recettesRouter } from './routes/recettes';
-
-//Connexion à la BDD
-let db = new Singleton(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-export { db };
 
 //Initialisation de l'app
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
 
-//Routers
-app.use('/recettes', recettesRouter);
+//Router
+app.use('/api', router);
 
 //Port
 app.listen(PORT, () => {
