@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
 import { Recipe } from "../models/Recipe";
+import { User } from "../models/User";
 import { CrudController } from "./CrudController";
 
 class RecettesController extends CrudController
 {
     async read(request: Request, response: Response)
     {
-        response.send(await Recipe.findOne({where: {id: request.params.id, deleted_at: null}}));
+        response.send(await Recipe.findOne({where: {id: request.params.id, deleted_at: null}, include: User}));
     };
 
     async all(request: Request, response: Response)
@@ -38,12 +39,24 @@ class RecettesController extends CrudController
 
     async delete(request: Request, response: Response)
     {
-        await Recipe.destroy({where: {id: request.params.id}});
+        await Recipe.destroy({where: {id: request.params.id}})
+                    .then(() => {
+                        response.send("OK");
+                    })
+                    .catch(() => {
+                        response.send("Error");
+                    });
     }
 
     async restore(request: Request, response: Response)
     {
-        await Recipe.restore({where: {id: request.params.id}});
+        await Recipe.restore({where: {id: request.params.id}})
+                    .then(() => {
+                        response.send("OK");
+                    })
+                    .catch(() => {
+                        response.send("Error");
+                    });
     }
 }
 

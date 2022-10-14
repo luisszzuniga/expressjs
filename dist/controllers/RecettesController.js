@@ -2,10 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.recettesController = void 0;
 const Recipe_1 = require("../models/Recipe");
+const User_1 = require("../models/User");
 const CrudController_1 = require("./CrudController");
 class RecettesController extends CrudController_1.CrudController {
     async read(request, response) {
-        response.send(await Recipe_1.Recipe.findOne({ where: { id: request.params.id, deleted_at: null } }));
+        response.send(await Recipe_1.Recipe.findOne({ where: { id: request.params.id, deleted_at: null }, include: User_1.User }));
     }
     ;
     async all(request, response) {
@@ -30,10 +31,22 @@ class RecettesController extends CrudController_1.CrudController {
         });
     }
     async delete(request, response) {
-        await Recipe_1.Recipe.destroy({ where: { id: request.params.id } });
+        await Recipe_1.Recipe.destroy({ where: { id: request.params.id } })
+            .then(() => {
+            response.send("OK");
+        })
+            .catch(() => {
+            response.send("Error");
+        });
     }
     async restore(request, response) {
-        await Recipe_1.Recipe.restore({ where: { id: request.params.id } });
+        await Recipe_1.Recipe.restore({ where: { id: request.params.id } })
+            .then(() => {
+            response.send("OK");
+        })
+            .catch(() => {
+            response.send("Error");
+        });
     }
 }
 exports.recettesController = new RecettesController;

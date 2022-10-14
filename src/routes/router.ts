@@ -5,6 +5,9 @@ import { Request, Response } from 'express';
 
 //Controllers
 import { recettesController } from '../controllers/RecettesController';
+import { usersController } from '../controllers/UsersController';
+import { coursesController } from '../controllers/CoursesController';
+import { seasonsController } from '../controllers/SeasonsController';
 
 
 //RECETTES
@@ -27,5 +30,32 @@ router.post('/recettes/restore/:id', (request: Request, response: Response) => {
     recettesController.restore(request, response);
 });
 //FIN RECETTES
+
+//USERS
+router.get('/users', (request: Request, response: Response) => {
+    usersController.all(request, response);
+});
+router.get('/users/get/:id', (request: Request, response: Response) => {
+    usersController.read(request, response);
+});
+//FIN USERS
+
+//COURSES (TYPES DE PLAT)
+router.get('/courses', (request: Request, response: Response) => {
+    coursesController.all(request, response);
+});
+router.get('/courses/get/:id', (request: Request, response: Response) => {
+    coursesController.read(request, response);
+})
+//FIN COURSES
+
+//SAISONS
+router.get('/seasons', (request: Request, response: Response) => {
+    seasonsController.all(request, response);
+})
+router.get('/seasons/get/:id', (request: Request, response: Response) => {
+    seasonsController.read(request, response);
+})
+//FIN SAISONS
 
 export { router };

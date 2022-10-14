@@ -1,7 +1,23 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
+import { User } from "../models/User";
 import { sequelize } from "../config/database";
 
-const Recipe = sequelize.define('recipes', {
+class Recipe extends Model
+{
+  public id!: Number;
+  public name!: String;
+  public slug!: String;
+  public description!: String;
+  public guests!: Number;
+  public idCourse!: Number;
+  public idSeason!: Number;
+  public idUser!: Number;
+  public createdAt!: Date;
+  public modifiedAt!: Date;
+  public deletedAt!: Date;  
+}
+
+Recipe.init({
   // Model attributes
   id: {
     type: DataTypes.INTEGER,
@@ -94,9 +110,14 @@ const Recipe = sequelize.define('recipes', {
   }
 }, {
   // Other model options go here
-  paranoid: true
+  sequelize,
+  paranoid: true,
+  modelName: 'recipe',
 });
 
 // allowNull defaults to true
+
+User.hasMany(Recipe, {foreignKey: 'idUser'});
+Recipe.belongsTo(User, {foreignKey: 'idUser'});
 
 export { Recipe };

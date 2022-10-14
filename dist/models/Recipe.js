@@ -1,9 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Recipe = void 0;
-const { DataTypes } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
+const User_1 = require("../models/User");
 const database_1 = require("../config/database");
-const Recipe = database_1.sequelize.define('recipes', {
+class Recipe extends Model {
+}
+exports.Recipe = Recipe;
+Recipe.init({
     // Model attributes
     id: {
         type: DataTypes.INTEGER,
@@ -96,6 +100,10 @@ const Recipe = database_1.sequelize.define('recipes', {
     }
 }, {
     // Other model options go here
-    paranoid: true
+    sequelize: database_1.sequelize,
+    paranoid: true,
+    modelName: 'recipe',
 });
-exports.Recipe = Recipe;
+// allowNull defaults to true
+User_1.User.hasMany(Recipe, { foreignKey: 'idUser' });
+Recipe.belongsTo(User_1.User, { foreignKey: 'idUser' });
