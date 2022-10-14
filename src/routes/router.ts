@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 import { Request, Response } from 'express';
+import * as Auth from '../middleware/authenticate';
 
 //Controllers
 import { recettesController } from '../controllers/RecettesController';
@@ -12,7 +13,7 @@ import { imagesController } from '../controllers/ImagesController';
 
 
 //RECETTES
-router.get("/recettes", (request: Request, response: Response) => {
+router.get("/recettes", (Auth.authorize(['getRecipeList'])), (request: Request, response: Response) => {
     recettesController.all(request, response);
 });
 router.get("/recettes/get/:id", (request: Request, response: Response) => {
