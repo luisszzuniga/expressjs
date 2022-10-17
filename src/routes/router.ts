@@ -40,6 +40,12 @@ router.get('/users', (request: Request, response: Response) => {
 router.get('/users/get/:id', (request: Request, response: Response) => {
     usersController.read(request, response);
 });
+router.post('/users', (request: Request, response: Response) => {
+    usersController.create(request, response);
+})
+router.patch('/users/:id', (request: Request, response: Response) => {
+    usersController.update(request, response);
+})
 //FIN USERS
 
 //COURSES (TYPES DE PLAT)

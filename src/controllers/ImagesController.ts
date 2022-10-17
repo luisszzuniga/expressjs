@@ -4,14 +4,28 @@ import { CrudController } from "./CrudController";
 
 class ImagesController extends CrudController
 {
-    async all(request: Request, response: Response)
+    all(request: Request, response: Response)
     {
-        response.send(await Image.findAll());
+        Image.findAll()
+            .then((images: Image[]) => {
+                response.send(images);
+            })
+            .catch((error: Error) => {
+                console.log(error);
+                response.json({"error": "Impossible de récupérer les images."});
+            })
     };
 
-    async read(request: Request, response: Response)
+    read(request: Request, response: Response)
     {
-        response.send(await Image.findByPk(request.params.id));
+        Image.findByPk(request.params.id)
+            .then((image: Image) => {
+                response.send(image);
+            })
+            .catch((error: Error) => {
+                console.log(error);
+                response.json({"error": "Impossible de récupérer l'image."})
+            })
     }
 }
 

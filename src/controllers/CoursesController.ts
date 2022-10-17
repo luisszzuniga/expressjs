@@ -4,14 +4,28 @@ import { CrudController } from "./CrudController";
 
 class CoursesController extends CrudController
 {
-    async all(request: Request, response: Response)
+    all(request: Request, response: Response)
     {
-        response.send(await Course.findAll());
+        Course.findAll()
+            .then((courses: Course[]) => {
+                response.send(courses);
+            })
+            .catch((error: Error) => {
+                console.log(error);
+                response.json({"error": "Impossible de récupérer les types de plats."});
+            })
     };
 
-    async read(request: Request, response: Response)
+    read(request: Request, response: Response)
     {
-        response.send(await Course.findByPk(request.params.id));
+        Course.findByPk(request.params.id)
+            .then((course: Course) => {
+                response.send(course);
+            })
+            .catch((error: Error) => {
+                console.log(error);
+                response.json({"error": "Impossible de récupérer le type de plat."});
+            })
     }
 }
 

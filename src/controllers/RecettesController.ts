@@ -6,58 +6,73 @@ import { CrudController } from "./CrudController";
 
 class RecettesController extends CrudController
 {
-    async read(request: Request, response: Response)
+    read(request: Request, response: Response)
     {
-        response.send(await Recipe.findOne({where: {id: request.params.id, deleted_at: null}, include: [User, Image]}));
+        Recipe.findOne({where: {id: request.params.id, deleted_at: null}, include: [User, Image]})
+            .then((recipe: Recipe) => {
+                response.send(recipe);
+            })
+            .catch((error: Error) => {
+                console.log(error);
+                response.json({"error": "Impossible de récupérer la recette."});
+            })
     };
 
-    async all(request: Request, response: Response)
+    all(request: Request, response: Response)
     {
-        response.send(await Recipe.findAll({where: {deleted_at: null}}));
+        Recipe.findAll({where: {deleted_at: null}})
+            .then((recipes: Recipe[]) => {
+                response.send(recipes);
+            })
+            .catch((error: Error) => {
+                console.log(error);
+                response.json({"error": "Impossible de récupérer les recettes."});
+            })
     }
 
-    async create(request: Request, response: Response)
+    create(request: Request, response: Response)
     {
-        await Recipe.create(request.body)
-                    .then((newRecipe: Object) => {
-                        response.send(newRecipe);
-                    })
-                    .catch((error: Error) => {
-                        response.send(error)
-                    });
+        Recipe.create(request.body)
+            .then((newRecipe: Recipe) => {
+                response.send(newRecipe);
+            })
+            .catch((error: Error) => {
+                console.log(error);
+                response.json({"error": "Impossible d'ajouter la recette"});
+            });
     }
 
-    async update(request: Request, response: Response)
+    update(request: Request, response: Response)
     {
-        await Recipe.update(request.body, {where: {id: request.params.id}})
-                    .then((result: Number[]) => {
-                        response.send(result);
-                    })
-                    .catch((result: Number[]) => {
-                        response.send(result);
-                    });
+        Recipe.update(request.body, {where: {id: request.params.id}})
+            .then((result: Number[]) => {
+                response.send(result);
+            })
+            .catch((result: Number[]) => {
+                response.json({"error": "Impossible de mettre à jour la recette."});
+            });
     }
 
-    async delete(request: Request, response: Response)
+    delete(request: Request, response: Response)
     {
-        await Recipe.destroy({where: {id: request.params.id}})
-                    .then(() => {
-                        response.send("OK");
-                    })
-                    .catch(() => {
-                        response.send("Error");
-                    });
+        Recipe.destroy({where: {id: request.params.id}})
+            .then(() => {
+                response.json({"message": "Recette correctement supprimée."});
+            })
+            .catch(() => {
+                response.json({"error": "Impossible de supprimer la recette."});
+            });
     }
 
-    async restore(request: Request, response: Response)
+    restore(request: Request, response: Response)
     {
-        await Recipe.restore({where: {id: request.params.id}})
-                    .then(() => {
-                        response.send("OK");
-                    })
-                    .catch(() => {
-                        response.send("Error");
-                    });
+        Recipe.restore({where: {id: request.params.id}})
+            .then(() => {
+                response.json({"message": "Recette restaurée."});
+            })
+            .catch(() => {
+                response.json({"error": "La recette n'a pas pu être restaurée."});
+            });
     }
 }
 

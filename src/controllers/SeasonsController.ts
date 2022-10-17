@@ -4,14 +4,28 @@ import { CrudController } from "./CrudController";
 
 class SeasonsController extends CrudController
 {
-    async all(request: Request, response: Response)
+    all(request: Request, response: Response)
     {
-        response.send(await Season.findAll());
+        Season.findAll()
+            .then((seasons: Season[]) => {
+                response.send(seasons);
+            })
+            .catch((error: Error) => {
+                console.log(error);
+                response.json({"message": "Impossible de récupérer les saisons."});
+            })
     };
 
-    async read(request: Request, response: Response)
+    read(request: Request, response: Response)
     {
-        response.send(await Season.findByPk(request.params.id));
+        Season.findByPk(request.params.id)
+            .then((season: Season) => {
+                response.send(season);
+            })
+            .catch((error: Error) => {
+                console.log(error);
+                response.json({"message": "Impossible de récupérer la saison."});
+            })
     }
 }
 

@@ -3,16 +3,53 @@ import { Recipe } from "../models/Recipe";
 import { User } from "../models/User";
 import { CrudController } from "./CrudController";
 
-class UsersController extends CrudController
-{
-    async all(request: Request, response: Response)
+class UsersController extends CrudController {
+    all(request: Request, response: Response)
     {
-        response.send(await User.findAll());
+        User.findAll()
+            .then((users: User[]) => {
+                response.send(users);
+            })
+            .catch((error: Error) => {
+                console.log(error);
+                response.json({"message": "Impossible de récupérer tous les utilisateurs."});
+            })
     };
 
-    async read(request: Request, response: Response)
+    read(request: Request, response: Response)
     {
-        response.send(await User.findByPk(request.params.id, {include: Recipe}));
+        User.findByPk(request.params.id, { include: Recipe })
+            .then((user: User) => {
+                response.send(user);
+            })
+            .catch((error: Error) => {
+                console.log(error);
+                response.json({"message": "Impossible de trouver cet utilisateur."});
+            })
+    }
+
+    create(request: Request, response: Response)
+    {
+        User.create(request.body)
+            .then((newUser: Object) => {
+                response.send(newUser);
+            })
+            .catch((error: Error) => {
+                console.log(error)
+                response.json({"message": "Insertion impossible en BDD."})
+            });
+    }
+
+    update(request: Request, response: Response)
+    {
+        User.update(request.body, {where: {id: request.params.id}})
+            .then(() => {
+                response.json({"message": "Utilisateur mis à jour."});
+            })
+            .catch((error: Error) => {
+                console.log(error);
+                response.json({"message": "Impossible de mettre à jour l'utilisateur."});
+            });
     }
 }
 
