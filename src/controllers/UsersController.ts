@@ -4,6 +4,8 @@ import { User } from "../models/User";
 import { CrudController } from "./CrudController";
 import { Ingredient } from "../models/Ingredient";
 import { Image } from "../models/Image";
+import { Permission } from "../models/Permission";
+import { Step } from "../models/Step";
 
 class UsersController extends CrudController {
     all(request: Request, response: Response)
@@ -21,13 +23,19 @@ class UsersController extends CrudController {
     read(request: Request, response: Response)
     {
         User.findByPk(request.params.id, {
-            include: {
-                model: Recipe,
-                include: [
-                    { model: Image },
-                    { model: Ingredient }
-                ]
-            }
+            include: [
+                {
+                    model: Recipe,
+                    include: [
+                        { model: Image },
+                        { model: Ingredient },
+                        { model: Step }
+                    ]
+                },
+                {
+                    model: Permission
+                }
+            ]
         })
             .then((user: User) => {
                 response.send(user);
