@@ -2,12 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.recettesController = void 0;
 const Image_1 = require("../models/Image");
+const Ingredient_1 = require("../models/Ingredient");
 const Recipe_1 = require("../models/Recipe");
 const User_1 = require("../models/User");
 const CrudController_1 = require("./CrudController");
 class RecettesController extends CrudController_1.CrudController {
     read(request, response) {
-        Recipe_1.Recipe.findOne({ where: { id: request.params.id, deleted_at: null }, include: [User_1.User, Image_1.Image] })
+        Recipe_1.Recipe.findOne({ where: { id: request.params.id, deleted_at: null }, include: [User_1.User, Image_1.Image, Ingredient_1.Ingredient] })
             .then((recipe) => {
             response.send(recipe);
         })
@@ -63,6 +64,8 @@ class RecettesController extends CrudController_1.CrudController {
             .catch(() => {
             response.json({ "error": "La recette n'a pas pu être restaurée." });
         });
+    }
+    addIngredient(request, response) {
     }
 }
 exports.recettesController = new RecettesController;

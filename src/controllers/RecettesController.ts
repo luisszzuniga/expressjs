@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Image } from "../models/Image";
+import { Ingredient } from "../models/Ingredient";
 import { Recipe } from "../models/Recipe";
 import { User } from "../models/User";
 import { CrudController } from "./CrudController";
@@ -8,7 +9,7 @@ class RecettesController extends CrudController
 {
     read(request: Request, response: Response)
     {
-        Recipe.findOne({where: {id: request.params.id, deleted_at: null}, include: [User, Image]})
+        Recipe.findOne({where: {id: request.params.id, deleted_at: null}, include: [User, Image, Ingredient]})
             .then((recipe: Recipe) => {
                 response.send(recipe);
             })
@@ -73,6 +74,11 @@ class RecettesController extends CrudController
             .catch(() => {
                 response.json({"error": "La recette n'a pas pu être restaurée."});
             });
+    }
+
+    addIngredient(request: Request, response: Response)
+    {
+        
     }
 }
 
