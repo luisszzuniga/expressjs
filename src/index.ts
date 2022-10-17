@@ -4,6 +4,7 @@ import express from 'express';
 import { generateToken } from './authenticate/jwt';
 import { PORT } from './config/constants';
 import { router } from './routes/router';
+import { auth } from './routes/auth';
 
 
 //Initialisation de l'app
@@ -13,8 +14,9 @@ app.use(express.urlencoded({ extended: true }))
 
 console.log('TOKEN JWT : ' + generateToken());
 
-//Router
+//Routers
 app.use('/api', router);
+app.use('/auth', auth);
 
 //Port
 app.listen(PORT, () => {

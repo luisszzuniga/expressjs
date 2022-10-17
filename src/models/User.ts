@@ -1,7 +1,6 @@
 const { DataTypes, Model } = require('sequelize');
 const md5 = require("md5");
 import { sequelize } from "../config/database";
-import { Recipe } from "./Recipe";
 
 class User extends Model
 {
@@ -46,6 +45,10 @@ User.init({
       notNull: {
         args: true,
         msg: "Vous devez saisir un mail."
+      },
+      isEmail: {
+        args: true,
+        msg: "Veuillez saisir un email valide."
       }
     }
   },
@@ -58,8 +61,8 @@ User.init({
         msg: "Vous devez saisir un mot de passe."
       }
     },
-    set(this: User, value: String) {
-        this.setDataValue('password', md5(value));
+    async set(this: User, value: String) {
+        this.setDataValue('password', await md5(value));
     }
   },
   idPermission: {

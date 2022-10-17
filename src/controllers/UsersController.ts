@@ -57,23 +57,6 @@ class UsersController extends CrudController {
                 response.json({"message": "Impossible de mettre à jour l'utilisateur."});
             });
     }
-
-    login(request: Request, response: Response)
-    {
-
-    }
-
-    register(request: Request, response: Response)
-    {
-        User.create(request.body)
-            .then((newUser: Object) => {
-                response.send(newUser);
-            })
-            .catch((error: Error) => {
-                console.log(error)
-                response.json({"message": "Insertion impossible en BDD."})
-            });
-    }
 }
 
 export const usersController = new UsersController;

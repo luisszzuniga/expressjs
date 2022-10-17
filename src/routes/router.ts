@@ -43,14 +43,6 @@ router.get('/users/get/:id', (request: Request, response: Response) => {
 router.patch('/users/:id', (request: Request, response: Response) => {
     usersController.update(request, response);
 })
-//AUTH
-router.post('/login', (request: Request, response: Response) => {
-    usersController.login(request, response);
-})
-router.post('/register', (request: Request, response: Response) => {
-    usersController.register(request, response);
-})
-//FIN AUTH
 //FIN USERS
 
 //COURSES (TYPES DE PLAT)
