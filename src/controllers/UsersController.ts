@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { Recipe } from "../models/Recipe";
 import { User } from "../models/User";
 import { CrudController } from "./CrudController";
+import { Ingredient } from "../models/Ingredient";
+import { Image } from "../models/Image";
 
 class UsersController extends CrudController {
     all(request: Request, response: Response)
@@ -18,7 +20,15 @@ class UsersController extends CrudController {
 
     read(request: Request, response: Response)
     {
-        User.findByPk(request.params.id, { include: Recipe })
+        User.findByPk(request.params.id, {
+            include: {
+                model: Recipe,
+                include: [
+                    { model: Image },
+                    { model: Ingredient }
+                ]
+            }
+        })
             .then((user: User) => {
                 response.send(user);
             })
@@ -26,18 +36,6 @@ class UsersController extends CrudController {
                 console.log(error);
                 response.json({"message": "Impossible de trouver cet utilisateur."});
             })
-    }
-
-    create(request: Request, response: Response)
-    {
-        User.create(request.body)
-            .then((newUser: Object) => {
-                response.send(newUser);
-            })
-            .catch((error: Error) => {
-                console.log(error)
-                response.json({"message": "Insertion impossible en BDD."})
-            });
     }
 
     update(request: Request, response: Response)
@@ -49,6 +47,23 @@ class UsersController extends CrudController {
             .catch((error: Error) => {
                 console.log(error);
                 response.json({"message": "Impossible de mettre à jour l'utilisateur."});
+            });
+    }
+
+    login(request: Request, response: Response)
+    {
+
+    }
+
+    register(request: Request, response: Response)
+    {
+        User.create(request.body)
+            .then((newUser: Object) => {
+                response.send(newUser);
+            })
+            .catch((error: Error) => {
+                console.log(error)
+                response.json({"message": "Insertion impossible en BDD."})
             });
     }
 }
