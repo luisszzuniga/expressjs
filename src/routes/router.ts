@@ -19,6 +19,9 @@ router.get("/recettes", (Auth.authorize(['admin'])), (request: Request, response
 router.get("/recettes/get/:id", (request: Request, response: Response) => {
     recettesController.read(request, response);
 });
+router.get("/recettes/list-ingredients/:id", (request: Request, response: Response) => {
+    recettesController.listIngredients(request, response);
+})
 router.post('/recettes', (request: Request, response: Response) => {
     recettesController.create(request, response);
 })

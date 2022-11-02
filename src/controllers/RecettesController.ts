@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Image } from "../models/Image";
 import { Ingredient } from "../models/Ingredient";
+import { IngredientRecipe } from "../models/IngredientRecipe";
 import { Recipe } from "../models/Recipe";
 import { User } from "../models/User";
 import { CrudController } from "./CrudController";
@@ -16,6 +17,17 @@ class RecettesController extends CrudController
             .catch((error: Error) => {
                 console.log(error);
                 response.json({"error": "Impossible de récupérer la recette."});
+            })
+    };
+
+    listIngredients(request: Request, response: Response) {
+        IngredientRecipe.findAll({where: {idRecipe: request.params.id}, include: [Ingredient]})
+            .then((ingredients: Ingredient[]) => {
+                response.send(ingredients);
+            })
+            .catch((error: Error) => {
+                console.log(error);
+                response.json({"error": "Impossible de récupérer les ingrédients de la recette."});
             })
     };
 

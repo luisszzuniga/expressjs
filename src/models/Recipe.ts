@@ -1,6 +1,7 @@
 const { DataTypes, Model } = require('sequelize');
 import { User } from "../models/User";
 import { sequelize } from "../config/database";
+import { IngredientRecipe } from "./IngredientRecipe";
 
 class Recipe extends Model
 {
@@ -122,5 +123,6 @@ Recipe.init({
 
 User.hasMany(Recipe, {foreignKey: 'idUser'});
 Recipe.belongsTo(User, {foreignKey: 'idUser'});
+
 
 export { Recipe };

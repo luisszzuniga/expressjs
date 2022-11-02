@@ -1,5 +1,7 @@
 const { DataTypes, Model } = require('sequelize');
 import { sequelize } from "../config/database";
+import { Ingredient } from "./Ingredient";
+import { Recipe } from "./Recipe";
 
 class IngredientRecipe extends Model
 {

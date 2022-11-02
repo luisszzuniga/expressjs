@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.recettesController = void 0;
 const Image_1 = require("../models/Image");
 const Ingredient_1 = require("../models/Ingredient");
+const IngredientRecipe_1 = require("../models/IngredientRecipe");
 const Recipe_1 = require("../models/Recipe");
 const User_1 = require("../models/User");
 const CrudController_1 = require("./CrudController");
@@ -15,6 +16,17 @@ class RecettesController extends CrudController_1.CrudController {
             .catch((error) => {
             console.log(error);
             response.json({ "error": "Impossible de récupérer la recette." });
+        });
+    }
+    ;
+    listIngredients(request, response) {
+        IngredientRecipe_1.IngredientRecipe.findAll({ where: { idRecipe: request.params.id }, include: [Ingredient_1.Ingredient] })
+            .then((ingredients) => {
+            response.send(ingredients);
+        })
+            .catch((error) => {
+            console.log(error);
+            response.json({ "error": "Impossible de récupérer les ingrédients de la recette." });
         });
     }
     ;
