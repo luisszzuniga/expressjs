@@ -6,17 +6,14 @@ import { PASSPHRASE } from '../config/constants';
 /**
  * création du token JWT
  */
-export function generateToken() {
+export function generateToken(userId: number, userName: string, role: string) {
     // Les informations que l'on souhaite enregistrer dans le token
     const payload = {
-        name: 'partenaire1',
-        userId: 123,
+        name: userName,
+        userId: userId,
         // Les accès à l'API que l'on souhaite ouvrir à ce partenaire
         accessTypes: [
-            'getRecipeList',
-            'showRecipe',
-            'updateRecipe',
-            'addRecipe'
+            role
         ]
     };
     // Lecture du fichier private.key permettant de crypter le JWT
@@ -30,7 +27,6 @@ export function generateToken() {
     };
 
     // generation du token JWT
-    // Note: la passphrase devrait être dans le .env
     return sign(payload, { key: privateKey, passphrase: PASSPHRASE }, signInOptions);
 }
 

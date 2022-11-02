@@ -20,7 +20,8 @@ Recipe.init({
             notNull: {
                 args: true,
                 msg: "Vous devez saisir un nom."
-            }
+            },
+            max: 50
         }
     },
     slug: {
@@ -30,7 +31,8 @@ Recipe.init({
             notNull: {
                 args: true,
                 msg: "Vous devez saisir un slug."
-            }
+            },
+            max: 50
         }
     },
     description: {
@@ -50,7 +52,8 @@ Recipe.init({
             notNull: {
                 args: true,
                 msg: "Vous devez saisir le nombre de personnes."
-            }
+            },
+            max: 50
         }
     },
     idCourse: {

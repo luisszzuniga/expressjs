@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
-console.log('TOKEN JWT : ' + generateToken());
+// console.log('TOKEN JWT : ' + generateToken());
 
 //Routers
 app.use('/api', router);

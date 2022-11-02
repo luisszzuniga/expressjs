@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //Imports
 require('dotenv').config();
 const express_1 = __importDefault(require("express"));
-const jwt_1 = require("./authenticate/jwt");
 const constants_1 = require("./config/constants");
 const router_1 = require("./routes/router");
 const auth_1 = require("./routes/auth");
@@ -14,7 +13,7 @@ const auth_1 = require("./routes/auth");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
-console.log('TOKEN JWT : ' + (0, jwt_1.generateToken)());
+// console.log('TOKEN JWT : ' + generateToken());
 //Routers
 app.use('/api', router_1.router);
 app.use('/auth', auth_1.auth);

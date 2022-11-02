@@ -13,7 +13,7 @@ import { imagesController } from '../controllers/ImagesController';
 
 
 //RECETTES
-router.get("/recettes", (Auth.authorize(['getRecipeList'])), (request: Request, response: Response) => {
+router.get("/recettes", (Auth.authorize(['admin'])), (request: Request, response: Response) => {
     recettesController.all(request, response);
 });
 router.get("/recettes/get/:id", (request: Request, response: Response) => {

@@ -21,7 +21,7 @@ class RecettesController extends CrudController
 
     all(request: Request, response: Response)
     {
-        Recipe.findAll({where: {deleted_at: null}})
+        Recipe.findAll({where: {deleted_at: null}, include: [Image, Ingredient]})
             .then((recipes: Recipe[]) => {
                 response.send(recipes);
             })

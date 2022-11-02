@@ -35,7 +35,7 @@ const CoursesController_1 = require("../controllers/CoursesController");
 const SeasonsController_1 = require("../controllers/SeasonsController");
 const ImagesController_1 = require("../controllers/ImagesController");
 //RECETTES
-router.get("/recettes", (Auth.authorize(['getRecipeList'])), (request, response) => {
+router.get("/recettes", (Auth.authorize(['admin'])), (request, response) => {
     RecettesController_1.recettesController.all(request, response);
 });
 router.get("/recettes/get/:id", (request, response) => {
